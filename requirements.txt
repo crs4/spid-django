@@ -1,0 +1,3 @@
+Django
+pysaml2
+djangosaml2==0.16.10
