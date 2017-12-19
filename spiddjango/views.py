@@ -108,7 +108,7 @@ def login(request,
     client = Saml2Client(conf)
     http_response = None
     authn_custom_args = get_custom_setting('SAML_AUTHN_CUSTOM_ARGS', {})
-    print(binding)
+
     logger.debug('Redirecting user to the IdP via %s binding.', binding)
     if binding == BINDING_HTTP_REDIRECT:
         try:
@@ -121,7 +121,6 @@ def login(request,
             session_id, result = client.prepare_for_authenticate(
                 entityid=selected_idp, relay_state=came_from,
                 binding=binding, sign=False, sigalg=sigalg, **authn_custom_args)
-            print(result)
         except TypeError as e:
             logger.error('Unable to know which IdP to use')
             return HttpResponse(text_type(e))
@@ -139,7 +138,6 @@ def login(request,
                 location,
                 binding=binding,
                 **authn_custom_args)
-            print(request_xml)
             try:
                 http_response = render(request, post_binding_form_template, {
                     'target_url': location,
@@ -156,7 +154,7 @@ def login(request,
             try:
                 session_id, result = client.prepare_for_authenticate(
                     entityid=selected_idp, relay_state=came_from,
-                    binding=binding)
+                    binding=binding, **authn_custom_args)
             except TypeError as e:
                 logger.error('Unable to know which IdP to use')
                 return HttpResponse(text_type(e))
@@ -170,14 +168,3 @@ def login(request,
     oq_cache = OutstandingQueriesCache(request.session)
     oq_cache.set(session_id, came_from)
     return http_response
-
-
-@require_POST
-@csrf_exempt
-def acs(request,
-        config_loader_path=None,
-        attribute_mapping=None,
-        create_unknown_user=None):
-    logger.info(request)
-    print(request.user)
-    return assertion_consumer_service(request, config_loader_path, attribute_mapping, create_unknown_user)

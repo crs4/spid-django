@@ -144,4 +144,3 @@ SAML_ATTRIBUTE_MAPPING = {
     "familyName": ('last_name',),
 }
 AUTH_USER_MODEL = 'spiddjango.SpidUser'
-
