@@ -1,5 +1,3 @@
-import random
-
 from django import template
 from django.conf import settings
 
@@ -16,15 +14,16 @@ def spid_button(context, size='medium'):
 
     spid_idp_list = [
             {'id': 'arubaid', 'name': 'Aruba ID'},
+            {'id': 'intesaid', 'name': 'Intesa ID'},
             {'id': 'infocertid', 'name': 'Infocert ID'},
             {'id': 'namirialid', 'name': 'Namirial ID'},
             {'id': 'posteid', 'name': 'Poste ID'},
             {'id': 'sielteid', 'name': 'Sielte ID'},
             {'id': 'spiditalia', 'name': 'SPIDItalia Register.it'},
             {'id': 'timid', 'name': 'Tim ID'},
-            {'id': 'test', 'name': 'Test'},
     ]
-
+    if settings.DEBUG is True:
+        spid_idp_list.append({'id': 'test', 'name': 'Test'})
     return {
         'method': context['request'].method.lower(),
         'post_data': context['request'].POST,
