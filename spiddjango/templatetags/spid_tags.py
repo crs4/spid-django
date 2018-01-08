@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from djangosaml2.utils import available_idps
 from djangosaml2.conf import get_config
 
@@ -29,7 +30,10 @@ def spid_button(context, size='medium'):
     else:
         conf = get_config(None, context['request'])
         idps = available_idps(conf, 'it')
+
     for idp in idps:
+        if idp == 'https://spid-testenv-identityserver' and settings.DEBUG is False:
+            continue
         try:
             spid_idp_list.append({'url': idp, 'id': SPID_IDP_MAPPING[idp][0], 'name': SPID_IDP_MAPPING[idp][1]})
         except KeyError:
