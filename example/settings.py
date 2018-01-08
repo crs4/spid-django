@@ -58,11 +58,15 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ROOT_URLCONF = 'example.urls'
-
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'spiddjango/templates'),
+                 os.path.join(BASE_DIR, 'example/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
