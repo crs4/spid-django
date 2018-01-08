@@ -2,13 +2,14 @@
 
 {% if method == 'post' %}
 <form name="spid_idp_access" action="#" method="post">
-    {% for key, value in post_data.items %}
-    <input type="hidden" name="{{ key }}" value="{{ value }}"/>
-    {% endfor %}
-    {% endif %}
+    {% csrf_token %}
+    <!--{% for key, value in post_data.items %}-->
+    <!--<input type="hidden" name="{{ key }}" value="{{ value }}"/>-->
+    <!--{% endfor %}-->
+{% endif %}
     <a href="#" class="italia-it-button italia-it-button-size-{{ button_size_short }} button-spid"
        spid-idp-button="#spid-idp-button-{{ button_size }}-get" aria-haspopup="true" aria-expanded="false">
-        <span class="italia-it-button-icon"><img src="static/spid/img/spid-ico-circle-bb.svg"
+        <span class="italia-it-button-icon"><img src="/static/spid/img/spid-ico-circle-bb.svg"
                                                  onerror="this.src='img/spid-ico-circle-bb.png'; this.onerror=null;"
                                                  alt="" /></span>
         <span class="italia-it-button-text">Entra con SPID</span>
@@ -17,9 +18,11 @@
         <ul id="spid-idp-list-{{ button_size }}-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
             {% for idp in idp_list %}
             <li class="spid-idp-button-link" data-idp="{{ idp.id }}">
-                <a href="#"><span class="spid-sr-only">{{ idp.name }}</span>
-                    <img src="static/spid/img/spid-idp-{{ idp.id }}.svg"
-                         onerror="this.src='spid/idp/img/spid-idp-{{ idp.id }}.png'; this.onerror=null;" alt="{{ idp.name }}" /></a>
+                <a href="/saml2/login?idp={{ idp.url }}">
+                    <span class="spid-sr-only">{{ idp.name }}</span>
+                    <img src="/static/spid/img/spid-idp-{{ idp.id }}.svg"
+                         onerror="this.src='spid/idp/img/spid-idp-{{ idp.id }}.png'; this.onerror=null;" alt="{{ idp.name }}" />
+                </a>
             </li>
             {% endfor %}
             <li class="spid-idp-support-link" data-spidlink="info">
@@ -36,8 +39,8 @@
 {% if method == 'post' %}
 </form>
 {% endif %}
-<script type="text/javascript" src="static/spid/js/jquery.min.js"></script>
-<script type="text/javascript" src="static/spid/js/spid-sp-access-button.min.js"></script>
+<script type="text/javascript" src="/static/spid/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/spid/js/spid-sp-access-button.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         var rootList = $("#spid-idp-list-{{ button_size }}-root-get");

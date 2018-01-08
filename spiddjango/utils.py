@@ -20,7 +20,7 @@ ATTRIB_MAP_DIR_PATH = path.join(path.dirname(__file__), './saml2/attribute-maps'
 
 def get_saml_config(root_url, sp_name, sp_key_file, sp_cert_file, requested_attributes=SPID_ATTRIBUTES,
                     required_attributes=SPID_ATTRIBUTES):
-    idp_metadata_files = [path.join(METADATA_DIR, f) for f in listdir(METADATA_DIR) if f.endswith('spid-idp-test.xml')]
+    idp_metadata_files = [path.join(METADATA_DIR, f) for f in listdir(METADATA_DIR)]
     if SPID_METADATA_DIR is not None:
         idp_metadata_files.extend([f for f in listdir(SPID_METADATA_DIR) if
                                    isfile(path.join(SPID_METADATA_DIR, f) and f.endswith('.xml'))])
@@ -60,7 +60,7 @@ def get_saml_config(root_url, sp_name, sp_key_file, sp_cert_file, requested_attr
         },
         # where the remote metadata is stored
         'metadata': {
-            'local': [idp_metadata_files[0]],
+            'local': idp_metadata_files,
         },
         # set to 1 to output debugging information
         'debug': 1,

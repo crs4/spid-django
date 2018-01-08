@@ -7,13 +7,11 @@ from django.shortcuts import render
 from django.template import TemplateDoesNotExist
 from django.utils.http import is_safe_url
 from django.utils.six import text_type, binary_type
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 from djangosaml2.cache import OutstandingQueriesCache
 from djangosaml2.conf import get_config
 from djangosaml2.overrides import Saml2Client
 from djangosaml2.utils import available_idps, get_location, get_idp_sso_supported_bindings, get_custom_setting
-from djangosaml2.views import callable_bool, assertion_consumer_service
+from djangosaml2.views import callable_bool
 from saml2 import BINDING_HTTP_POST, BINDING_HTTP_REDIRECT
 from saml2.s_utils import UnsupportedBinding
 from saml2.xmldsig import SIG_RSA_SHA1, SIG_RSA_SHA256
@@ -23,7 +21,7 @@ logger = logging.getLogger('spiddjango')
 
 def login(request,
           config_loader_path=None,
-          wayf_template='djangosaml2/wayf.html',
+          wayf_template='wayf.html',
           authorization_error_template='djangosaml2/auth_error.html',
           post_binding_form_template='djangosaml2/post_binding_form.html'):
     """SAML Authorization Request initiator
@@ -74,11 +72,11 @@ def login(request,
     conf = get_config(config_loader_path, request)
 
     # is a embedded wayf needed?
-    idps = available_idps(conf)
+    idps = available_idps(conf, 'it')
     if selected_idp is None and len(idps) > 1:
         logger.debug('A discovery process is needed')
         return render(request, wayf_template, {
-            'available_idps': idps.items(),
+            'available_idps': idps,
             'came_from': came_from,
         })
 
