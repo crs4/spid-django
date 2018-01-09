@@ -125,26 +125,4 @@ SAML_SP_KEY_PATH = os.path.join(os.path.dirname(__file__), './certs/key.pem')
 SAML_SP_CRT_PATH = os.path.join(os.path.dirname(__file__), './certs/cert.pem')
 from spiddjango.utils import get_saml_config
 SAML_CONFIG = get_saml_config(ROOT_URL, SAML_SP_NAME, SAML_SP_KEY_PATH, SAML_SP_CRT_PATH)
-SAML_AUTHN_CUSTOM_ARGS = {
-    'attribute_consuming_service_index': '1'
-}
-SAML_ATTRIBUTE_MAPPING = {
-    'spidCode': ('username',),
-    'fiscalNumber': ('fiscalNumber',),
-    "name": ('first_name',),
-    # "gender": ('gender',),
-    # "ivaCode": ('iva_code',),
-    # "placeOfBirth": ('place_of_birth',),
-    # "companyName": ('company_name',),
-    # "mobilePhone": ('mobile_phone',),
-    # "expirationDate": ('expiration_date',),
-    # "address": ('address',),
-    # "digitalAddress": ('digital_address',),
-    "email": ('email',),
-    # "registeredOffice": ('registered_office',),
-    # "idCard": ('username',),
-    # "dateOfBirth": ('date_of_birth',),
-    # "countyOfBirth": ('county_of_birth',),
-    "familyName": ('last_name',),
-}
 AUTH_USER_MODEL = 'spiddjango.SpidUser'

@@ -16,6 +16,8 @@ from saml2 import BINDING_HTTP_POST, BINDING_HTTP_REDIRECT
 from saml2.s_utils import UnsupportedBinding
 from saml2.xmldsig import SIG_RSA_SHA1, SIG_RSA_SHA256
 
+from spiddjango.settings import DEFAULT_ATTRIBUTE_CONSUMING_SERVICE
+
 logger = logging.getLogger('spiddjango')
 
 
@@ -105,7 +107,8 @@ def login(request,
 
     client = Saml2Client(conf)
     http_response = None
-    authn_custom_args = get_custom_setting('SAML_AUTHN_CUSTOM_ARGS', {})
+    attribute_consuming_service = get_custom_setting('SPID_ATTRIBUTE_CONSUMING_SERVICE',
+                                                     DEFAULT_ATTRIBUTE_CONSUMING_SERVICE)
 
     logger.debug('Redirecting user to the IdP via %s binding.', binding)
     if binding == BINDING_HTTP_REDIRECT:
@@ -118,7 +121,7 @@ def login(request,
             sigalg = sig_alg_option_map[sig_alg_option] if sign_requests else None
             session_id, result = client.prepare_for_authenticate(
                 entityid=selected_idp, relay_state=came_from,
-                binding=binding, sign=False, sigalg=sigalg, **authn_custom_args)
+                binding=binding, sign=False, sigalg=sigalg, attribute_consuming_service=attribute_consuming_service)
         except TypeError as e:
             logger.error('Unable to know which IdP to use')
             return HttpResponse(text_type(e))
@@ -135,7 +138,7 @@ def login(request,
             session_id, request_xml = client.create_authn_request(
                 location,
                 binding=binding,
-                **authn_custom_args)
+                attribute_consuming_service=attribute_consuming_service)
             try:
                 http_response = render(request, post_binding_form_template, {
                     'target_url': location,
@@ -152,7 +155,7 @@ def login(request,
             try:
                 session_id, result = client.prepare_for_authenticate(
                     entityid=selected_idp, relay_state=came_from,
-                    binding=binding, **authn_custom_args)
+                    binding=binding, attribute_consuming_service=attribute_consuming_service)
             except TypeError as e:
                 logger.error('Unable to know which IdP to use')
                 return HttpResponse(text_type(e))

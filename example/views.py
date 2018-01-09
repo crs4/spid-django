@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 @login_required
 def protected_view(request):
-    return HttpResponse("You logged in correctly")
+    return HttpResponse("You logged in correctly as %s" % request.user.spid_code)
 
 
 def home(request):

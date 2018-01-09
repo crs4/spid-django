@@ -13,7 +13,7 @@ SPID_IDP_MAPPING = {
     'https://idp.namirialtsp.com/idp': ('namirialid', 'Namirial ID'),
     'https://loginspid.aruba.it': ('arubaid', 'Aruba ID'),
     'https://posteid.poste.it': ('posteid', 'Poste ID'),
-    'https://spid-testenv-identityserver': ('test', 'AGID Test'),
+    'spid-testenv-identityserver': ('test', 'AGID Test'),
     'https://identity.sieltecloud.it': ('sielteid', 'Sielte ID'),
     'https://identity.infocert.it': ('infocertid', 'Infocert ID'),
 }
@@ -32,7 +32,7 @@ def spid_button(context, size='medium'):
         idps = available_idps(conf, 'it')
 
     for idp in idps:
-        if idp == 'https://spid-testenv-identityserver' and settings.DEBUG is False:
+        if idp == 'spid-testenv-identityserver' and settings.DEBUG is False:
             continue
         try:
             spid_idp_list.append({'url': idp, 'id': SPID_IDP_MAPPING[idp][0], 'name': SPID_IDP_MAPPING[idp][1]})

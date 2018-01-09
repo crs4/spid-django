@@ -18,8 +18,9 @@ from django.conf import settings
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '1'
+DEFAULT_ATTRIBUTE_CONSUMING_SERVICE = '1'
 SPID_METADATA_DIR = getattr(settings, 'SPID_METADATA_DIR', None)
-SAML_ATTRIBUTE_MAPPING = {
+SAML_ATTRIBUTE_MAPPING = getattr(settings, 'SAML_ATTRIBUTE_MAPPING', {
     "spidCode": ('spid_code',),
     "name": ('first_name',),
     "gender": ('gender',),
@@ -37,4 +38,4 @@ SAML_ATTRIBUTE_MAPPING = {
     "countyOfBirth": ('county_of_birth',),
     "familyName": ('last_name',),
     "fiscalNumber": ('fiscal_number',),
-}
+})
