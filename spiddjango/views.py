@@ -107,7 +107,7 @@ def login(request,
 
     client = Saml2Client(conf)
     http_response = None
-    attribute_consuming_service = get_custom_setting('SPID_ATTRIBUTE_CONSUMING_SERVICE',
+    attribute_consuming_service_index = get_custom_setting('SPID_ATTRIBUTE_CONSUMING_SERVICE',
                                                      DEFAULT_ATTRIBUTE_CONSUMING_SERVICE)
 
     logger.debug('Redirecting user to the IdP via %s binding.', binding)
@@ -121,7 +121,8 @@ def login(request,
             sigalg = sig_alg_option_map[sig_alg_option] if sign_requests else None
             session_id, result = client.prepare_for_authenticate(
                 entityid=selected_idp, relay_state=came_from,
-                binding=binding, sign=False, sigalg=sigalg, attribute_consuming_service=attribute_consuming_service)
+                binding=binding, sign=False, sigalg=sigalg,
+                attribute_consuming_service_index=attribute_consuming_service_index)
         except TypeError as e:
             logger.error('Unable to know which IdP to use')
             return HttpResponse(text_type(e))
@@ -138,7 +139,7 @@ def login(request,
             session_id, request_xml = client.create_authn_request(
                 location,
                 binding=binding,
-                attribute_consuming_service=attribute_consuming_service)
+                attribute_consuming_service_index=attribute_consuming_service_index)
             try:
                 http_response = render(request, post_binding_form_template, {
                     'target_url': location,
@@ -155,7 +156,7 @@ def login(request,
             try:
                 session_id, result = client.prepare_for_authenticate(
                     entityid=selected_idp, relay_state=came_from,
-                    binding=binding, attribute_consuming_service=attribute_consuming_service)
+                    binding=binding, attribute_consuming_service_index=attribute_consuming_service_index)
             except TypeError as e:
                 logger.error('Unable to know which IdP to use')
                 return HttpResponse(text_type(e))

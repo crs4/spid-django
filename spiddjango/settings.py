@@ -19,6 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '1'
 DEFAULT_ATTRIBUTE_CONSUMING_SERVICE = '1'
+
 SPID_METADATA_DIR = getattr(settings, 'SPID_METADATA_DIR', None)
 SAML_ATTRIBUTE_MAPPING = getattr(settings, 'SAML_ATTRIBUTE_MAPPING', {
     "spidCode": ('spid_code',),
@@ -37,5 +38,5 @@ SAML_ATTRIBUTE_MAPPING = getattr(settings, 'SAML_ATTRIBUTE_MAPPING', {
     "dateOfBirth": ('date_of_birth',),
     "countyOfBirth": ('county_of_birth',),
     "familyName": ('last_name',),
-    "fiscalNumber": ('fiscal_number',),
+    "fiscalNumber": ('username',),
 })
