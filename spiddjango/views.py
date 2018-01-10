@@ -16,7 +16,7 @@ from saml2 import BINDING_HTTP_POST, BINDING_HTTP_REDIRECT
 from saml2.s_utils import UnsupportedBinding
 from saml2.xmldsig import SIG_RSA_SHA1, SIG_RSA_SHA256
 
-from spiddjango.settings import DEFAULT_ATTRIBUTE_CONSUMING_SERVICE
+from spiddjango.settings import SPID_ATTRIBUTE_CONSUMING_SERVICE
 
 logger = logging.getLogger('spiddjango')
 
@@ -108,7 +108,7 @@ def login(request,
     client = Saml2Client(conf)
     http_response = None
     attribute_consuming_service_index = get_custom_setting('SPID_ATTRIBUTE_CONSUMING_SERVICE',
-                                                     DEFAULT_ATTRIBUTE_CONSUMING_SERVICE)
+                                                           SPID_ATTRIBUTE_CONSUMING_SERVICE)
 
     logger.debug('Redirecting user to the IdP via %s binding.', binding)
     if binding == BINDING_HTTP_REDIRECT:

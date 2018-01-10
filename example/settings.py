@@ -119,30 +119,13 @@ LOGIN_URL = '/saml2/login/'
 
 HOSTNAME = 'spid.testsp.it'
 ROOT_URL = 'https://' + HOSTNAME + ':9000'
-
-SAML_SP_NAME = 'Examples Service Provider'
+SAML_SP_NAME = 'Example Service Provider'
 SAML_SP_KEY_PATH = os.path.join(os.path.dirname(__file__), './certs/key.pem')
 SAML_SP_CRT_PATH = os.path.join(os.path.dirname(__file__), './certs/cert.pem')
-from spiddjango.utils import get_saml_config
-SAML_CONFIG = get_saml_config(ROOT_URL, SAML_SP_NAME, SAML_SP_KEY_PATH, SAML_SP_CRT_PATH)
+
 AUTH_USER_MODEL = 'spiddjango.SpidUser'
 
-SAML_ATTRIBUTE_MAPPING = {
-    "spidCode": ('spid_code',),
-    "name": ('first_name',),
-    "gender": ('gender',),
-    "ivaCode": ('iva_code',),
-    "placeOfBirth": ('place_of_birth',),
-    "companyName": ('company_name',),
-    "mobilePhone": ('mobile_phone',),
-    "expirationDate": ('expiration_date',),
-    "address": ('address',),
-    "digitalAddress": ('digital_address',),
-    "email": ('email',),
-    "registeredOffice": ('registered_office',),
-    "idCard": ('id_card',),
-    "dateOfBirth": ('date_of_birth',),
-    "countyOfBirth": ('county_of_birth',),
-    "familyName": ('last_name',),
-    "fiscalNumber": ('username',),
-}
+from spiddjango.settings import SPID_SAML_CONFIG, SPID_ATTRIBUTE_MAPPING
+
+SAML_CONFIG = SPID_SAML_CONFIG
+SAML_ATTRIBUTE_MAPPING = SPID_ATTRIBUTE_MAPPING
