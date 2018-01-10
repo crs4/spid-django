@@ -22,6 +22,9 @@ setup(
     author_email='vittorio.meloni@crs4.it',
     url='https://github.com/crs4/spid-django',
     download_url='https://github.com/crs4/spid-django',
+    install_requires=[
+        'djangosaml2',
+    ],
     keywords=['SPID', 'SAML2', 'Django'],
     classifiers=[
         'Intended Audience :: Developers',
