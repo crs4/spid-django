@@ -39,6 +39,12 @@ Set as user model 'spiddjango.SpidUser'
 AUTH_USER_MODEL = 'spiddjango.SpidUser'
 ```
 
+Set LOGIN_URL to '/saml2/login'
+
+```python
+LOGIN_URL = '/saml2/login/'
+```
+
 Define the following attributes:
 
 ```python
@@ -62,6 +68,15 @@ a configuration that works fine for SPID.
 By default the SP is configured to request all SPID attributes. If you need just a subset of
 them override the settings `SPID_REQUESTED_ATTRIBUTES` and `SPID_REQUIRED_ATTRIBUTES`.
 They must be a subset of `spiddjango.SPID_ATTRIBUTES`.
+
+In `urls.py` add saml2 urls
+
+```python
+urlpatterns = [ 
+    url(r'^saml2/', include('spiddjango.urls')), 
+    ..., 
+]  
+```
 
 # Example application
 
