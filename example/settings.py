@@ -116,7 +116,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/saml2/login/'
-
+LOGIN_REDIRECT_URL = '/protected/'
 HOSTNAME = 'spid.testsp.it'
 ROOT_URL = 'https://' + HOSTNAME + ':9000'
 SAML_SP_NAME = 'Example Service Provider'

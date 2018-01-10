@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^saml2/', include('spiddjango.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home),
-    url(r'^accounts/profile/$', views.protected_view)
+    url(r'^protected/$', views.protected_view),
 ] + static(settings.STATIC_URL)
