@@ -38,5 +38,13 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    packages=['spiddjango'],
+    packages=['spiddjango', 'spiddjango.migrations', 'spiddjango.templatetags'],
+    package_dir={'spiddjango': 'spiddjango'},
+    package_data={'spiddjango': ['saml2/attribute-maps/*.py',
+                                 'spid-idp-metadata/*.xml',
+                                 'static/spid/css/*.css',
+                                 'static/spid/img/*',
+                                 'static/spid/js/*.js',
+                                 'templates/*']},
+    include_package_data=True
 )
