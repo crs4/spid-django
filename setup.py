@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
-from distutils.core import setup
-from distutils.errors import DistutilsSetupError
+from setuptools import setup
 
 
 def _get_version():
@@ -10,7 +9,7 @@ def _get_version():
         with open('VERSION') as f:
             return f.read().strip()
     except IOError:
-        raise DistutilsSetupError('failed to read version info')
+        raise Exception('failed to read version info')
 
 
 setup(
@@ -27,16 +26,18 @@ setup(
     ],
     keywords=['SPID', 'SAML2', 'Django'],
     classifiers=[
+        'Environment :: Web Environment',
+        'Framework :: Django',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Libraries :: Python Modules',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     packages=['spiddjango', 'spiddjango.migrations', 'spiddjango.templatetags'],
     package_dir={'spiddjango': 'spiddjango'},
